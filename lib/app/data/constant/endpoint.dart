@@ -1,4 +1,4 @@
-class EndPoint {
+class Endpoint {
   static const String baseUrlApi =
       "https://api-perpustakaan.abadjayasenantiasa.com/api/v1/user/";
 

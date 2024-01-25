@@ -1,9 +1,8 @@
-import 'dart:html';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:peminjam_perpustakaan_kelas_b/app/data/constant/endpoint.dart';
+import 'package:peminjam_perpustakaan_kelas_b/app/data/model/response_login.dart';
 import 'package:peminjam_perpustakaan_kelas_b/app/data/provider/api_provider.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:peminjam_perpustakaan_kelas_b/app/data/provider/storage_provider.dart';
@@ -40,12 +39,14 @@ class LoginController extends GetxController {
       FocusScope.of(Get.context!).unfocus();
       formKey.currentState!.save();
       if (formKey.currentState!.validate()) {
-        final response = await ApiProvider.instance().post(EndPoint.login,
+        final response = await ApiProvider.instance().post(Endpoint.login,
             data: dio.FormData.fromMap({
               "username": usernameController.text.toString(),
               "password": passwordController.text.toString()
             }));
         if (response.statusCode == 200) {
+          ResponseLogin responseLogin = ResponseLogin.fromJson(response.data);
+          await StorageProvider.write(StorageKey.idUser, responseLogin.data!.id!.toString());
           await StorageProvider.write(StorageKey.status, "logged");
           Get.offAllNamed(Routes.HOME);
         } else {

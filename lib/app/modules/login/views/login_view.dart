@@ -31,7 +31,7 @@ class LoginView extends GetView<LoginController> {
             ),
             TextFormField(
               controller: controller.passwordController,
-              decoration: InputDecoration(hintText: "Masukkan Password"),
+              decoration: InputDecoration(hintText: "Masukkan Password", ),
               obscureText: true,
               validator: (value) {
                 if (value!.isEmpty) {

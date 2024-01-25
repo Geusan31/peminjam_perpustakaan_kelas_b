@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:peminjam_perpustakaan_kelas_b/app/routes/app_pages.dart';
 
 import '../controllers/book_controller.dart';
 
@@ -13,12 +14,19 @@ class BookView extends GetView<BookController> {
         title: const Text('BookView'),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          'BookView is working',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+      body: controller.obx((state) => ListView.separated(
+          itemBuilder: (context, index) {
+        return ListTile(
+          title: Text("${state[index].judul}"),
+          subtitle: Text("Penulis ${state[index].penulis }"),
+          trailing: ElevatedButton(onPressed: () {
+            Get.toNamed(Routes.ADD_PEMINJAMAN, parameters: {
+              'id': (state[index].id ?? 0).toString(),
+              'judul': state[index].judul ?? "-",
+            });
+          }, child: Text("Pinjam"))
+        );
+      }, separatorBuilder: (context, index) => Divider(), itemCount: state!.length)),
     );
   }
 }

@@ -41,7 +41,7 @@ class RegisterController extends GetxController {
       FocusScope.of(Get.context!).unfocus();
       formKey.currentState!.save();
       if (formKey.currentState!.validate()) {
-        final response = await ApiProvider.instance().post(EndPoint.register,
+        final response = await ApiProvider.instance().post(Endpoint.register,
             data: dio.FormData.fromMap({
               'nama': nameController.text.toString(),
               'username': usernameController.text.toString(),
